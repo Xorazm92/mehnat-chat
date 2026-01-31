@@ -1,0 +1,9 @@
+{
+  "name": "Mehnat Muhofazasi AI",
+  "description": "O'zbekiston Respublikasi mehnatni muhofaza qilish sohasidagi normativ-huquqiy hujjatlar bo'yicha professional maslahatchi va chatbot. Apple-style dizayn bilan jihozlangan.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone",
+    "geolocation"
+  ]
+}
