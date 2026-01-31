@@ -16,40 +16,45 @@ const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab }) => {
   ];
 
   return (
-    <div className="w-20 md:w-64 sidebar-glass border-r border-black/5 flex flex-col h-full transition-all duration-300">
-      <div className="p-6 flex items-center gap-3">
-        <div className="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center shadow-lg shadow-blue-500/20">
-          <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+    <div className="w-64 h-full sidebar-glass border-r border-black/5 dark:border-white/10 flex flex-col transition-all duration-300">
+      <div className="p-8 flex items-center gap-4">
+        <div className="w-12 h-12 bg-blue-600 rounded-2xl flex items-center justify-center shadow-lg shadow-blue-500/30">
+          <svg className="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
           </svg>
         </div>
-        <span className="hidden md:block font-bold text-gray-800 text-lg leading-tight">Mehnat AI</span>
+        <div className="flex flex-col">
+          <span className="font-bold text-gray-900 dark:text-white text-xl tracking-tight">Mehnat AI</span>
+          <span className="text-[10px] text-gray-500 font-semibold uppercase tracking-widest">Premium</span>
+        </div>
       </div>
 
-      <nav className="flex-1 px-3 space-y-1">
+      <nav className="flex-1 px-4 space-y-2 mt-4">
         {menuItems.map((item) => (
           <button
             key={item.id}
             onClick={() => setActiveTab(item.id)}
-            className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all duration-200 group ${
+            className={`w-full flex items-center gap-3 px-4 py-3 rounded-2xl transition-all duration-200 ${
               activeTab === item.id 
-                ? 'bg-blue-600 text-white shadow-md' 
-                : 'text-gray-500 hover:bg-black/5 hover:text-gray-900'
+                ? 'bg-blue-600 text-white shadow-xl shadow-blue-500/20' 
+                : 'text-gray-500 dark:text-gray-400 hover:bg-black/5 dark:hover:bg-white/5 hover:text-gray-900 dark:hover:text-white'
             }`}
           >
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={item.icon} />
             </svg>
-            <span className="hidden md:block font-medium">{item.label}</span>
+            <span className="font-semibold text-sm">{item.label}</span>
           </button>
         ))}
       </nav>
 
-      <div className="p-4 border-t border-black/5 hidden md:block">
-        <div className="bg-white/50 rounded-xl p-3 text-xs text-gray-400">
-          Versiya 1.0.0 (Uzbekistan)
-          <br />
-          Sanoat Xavfsizligi AI
+      <div className="p-6 border-t border-black/5 dark:border-white/10">
+        <div className="bg-white/40 dark:bg-white/5 rounded-2xl p-4 border border-black/5 dark:border-white/10">
+          <p className="text-[11px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-widest mb-1">Status</p>
+          <div className="flex items-center gap-2">
+            <div className="w-2 h-2 rounded-full bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.6)]"></div>
+            <span className="text-xs font-semibold text-gray-600 dark:text-gray-300">Tizim Online</span>
+          </div>
         </div>
       </div>
     </div>
