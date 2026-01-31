@@ -13,16 +13,18 @@ export class GeminiService {
     try {
       // Re-initialize to ensure latest API key context (as per guidelines for key selection logic)
       this.ai = new GoogleGenAI({ apiKey: process.env.API_KEY || '' });
-      
+
+      console.log("API Key loaded:", process.env.API_KEY ? "Yes (" + process.env.API_KEY.substring(0, 4) + "...)" : "No");
+
       const response = await this.ai.models.generateContent({
-        model: 'gemini-3-flash-preview',
+        model: 'gemini-flash-latest',
         contents: [
           ...history,
           { role: 'user', parts: [{ text: prompt }] }
         ],
         config: {
           systemInstruction: SYSTEM_INSTRUCTION,
-          tools: [{ googleSearch: {} }],
+          // tools: [{ googleSearch: {} }], // Temporarily disabled for stability
         },
       });
 

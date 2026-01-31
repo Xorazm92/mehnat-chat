@@ -46,7 +46,7 @@ const ChatWindow: React.FC = () => {
       }));
 
       const response = await geminiService.sendMessage(input, history);
-      
+
       const modelMessage: Message = {
         id: (Date.now() + 1).toString(),
         role: 'model',
@@ -74,8 +74,8 @@ const ChatWindow: React.FC = () => {
       <header className="h-16 border-b border-black/5 dark:border-white/10 flex items-center justify-between px-6 glass sticky top-0 z-10">
         <div className="flex items-center gap-3">
           <div className="relative">
-            <div className="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center shadow-md">
-              <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+            <div className="w-10 h-10 bg-white dark:bg-white/10 rounded-full flex items-center justify-center shadow-md overflow-hidden p-0.5">
+              <img src="/logo.png" alt="Mehnat AI" className="w-full h-full object-cover" />
             </div>
             <div className="absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5 bg-green-500 border-2 border-white dark:border-black rounded-full"></div>
           </div>
@@ -91,21 +91,20 @@ const ChatWindow: React.FC = () => {
         {messages.map((m) => (
           <div key={m.id} className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
             <div className={`group flex flex-col ${m.role === 'user' ? 'items-end' : 'items-start'} max-w-[90%] md:max-w-[75%]`}>
-              <div className={`px-5 py-4 rounded-3xl shadow-sm relative transition-all duration-200 ${
-                m.role === 'user' 
-                  ? 'bg-blue-600 text-white rounded-tr-none' 
+              <div className={`px-5 py-4 rounded-3xl shadow-sm relative transition-all duration-200 ${m.role === 'user'
+                  ? 'bg-blue-600 text-white rounded-tr-none'
                   : 'bg-white dark:bg-zinc-900 text-gray-800 dark:text-gray-100 rounded-tl-none border border-black/5 dark:border-white/5'
-              }`}>
+                }`}>
                 <p className="whitespace-pre-wrap leading-[1.6] text-[15px] md:text-[16px] font-normal tracking-tight">{m.text}</p>
                 {m.sources && m.sources.length > 0 && (
                   <div className="mt-5 pt-4 border-t border-black/5 dark:border-white/10">
                     <p className="text-[9px] uppercase tracking-widest font-bold mb-3 opacity-40">Tizim asoslangan manbalar:</p>
                     <div className="flex flex-wrap gap-2">
                       {m.sources.map((s, idx) => (
-                        <a 
-                          key={idx} 
-                          href={s.uri} 
-                          target="_blank" 
+                        <a
+                          key={idx}
+                          href={s.uri}
+                          target="_blank"
                           rel="noopener noreferrer"
                           className="text-[10px] bg-gray-100 dark:bg-white/10 hover:bg-gray-200 dark:hover:bg-white/20 px-3 py-1.5 rounded-full transition-colors font-medium border border-black/5 dark:border-white/5"
                         >
@@ -153,9 +152,8 @@ const ChatWindow: React.FC = () => {
             <button
               onClick={handleSend}
               disabled={isLoading || !input.trim()}
-              className={`p-3 rounded-full transition-all flex-shrink-0 mb-0.5 ${
-                input.trim() ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/40' : 'bg-gray-300 dark:bg-zinc-800 text-gray-500'
-              }`}
+              className={`p-3 rounded-full transition-all flex-shrink-0 mb-0.5 ${input.trim() ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/40' : 'bg-gray-300 dark:bg-zinc-800 text-gray-500'
+                }`}
             >
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 12h14M12 5l7 7-7 7" />

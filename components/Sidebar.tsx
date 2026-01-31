@@ -18,10 +18,8 @@ const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab }) => {
   return (
     <div className="w-64 h-full sidebar-glass border-r border-black/5 dark:border-white/10 flex flex-col transition-all duration-300">
       <div className="p-8 flex items-center gap-4">
-        <div className="w-12 h-12 bg-blue-600 rounded-2xl flex items-center justify-center shadow-lg shadow-blue-500/30">
-          <svg className="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-          </svg>
+        <div className="w-12 h-12 bg-white dark:bg-white/10 rounded-2xl flex items-center justify-center shadow-lg shadow-blue-500/10 overflow-hidden p-1">
+          <img src="/logo.png" alt="Mehnat AI" className="w-full h-full object-contain" />
         </div>
         <div className="flex flex-col">
           <span className="font-bold text-gray-900 dark:text-white text-xl tracking-tight">Mehnat AI</span>
@@ -34,11 +32,10 @@ const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab }) => {
           <button
             key={item.id}
             onClick={() => setActiveTab(item.id)}
-            className={`w-full flex items-center gap-3 px-4 py-3 rounded-2xl transition-all duration-200 ${
-              activeTab === item.id 
-                ? 'bg-blue-600 text-white shadow-xl shadow-blue-500/20' 
+            className={`w-full flex items-center gap-3 px-4 py-3 rounded-2xl transition-all duration-200 ${activeTab === item.id
+                ? 'bg-blue-600 text-white shadow-xl shadow-blue-500/20'
                 : 'text-gray-500 dark:text-gray-400 hover:bg-black/5 dark:hover:bg-white/5 hover:text-gray-900 dark:hover:text-white'
-            }`}
+              }`}
           >
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={item.icon} />

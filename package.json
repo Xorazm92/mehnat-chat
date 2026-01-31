@@ -6,12 +6,16 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "bot": "tsx bot.ts"
   },
   "dependencies": {
-    "react": "^19.2.4",
     "@google/genai": "^1.39.0",
-    "react-dom": "^19.2.4"
+    "dotenv": "^17.2.3",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
+    "telegraf": "^4.16.3",
+    "tsx": "^4.21.0"
   },
   "devDependencies": {
     "@types/node": "^22.14.0",
