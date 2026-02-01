@@ -24,7 +24,7 @@ export class GeminiService {
         ],
         config: {
           systemInstruction: SYSTEM_INSTRUCTION,
-          // tools: [{ googleSearch: {} }], // Temporarily disabled for stability
+          tools: [{ googleSearch: {} }], // Enabled for grounding
         },
       });
 

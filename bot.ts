@@ -22,13 +22,19 @@ if (!GEMINI_API_KEY) {
 const bot = new Telegraf(BOT_TOKEN);
 const ai = new GoogleGenAI({ apiKey: GEMINI_API_KEY });
 
-const SYSTEM_INSTRUCTION = `Siz O'zbekiston Respublikasining mehnatni muhofaza qilish sohasidagi mutaxassis-maslahatchisiz. 
-Sizning asosiy bilim manbangiz: https://gov.uz/oz/bv/sections/mehnatni-muhofaza-qilish-sohasiga-oid-normativ-huquqiy-hujjatlar saytidagi hujjatlar.
-Vazifalaringiz:
-1. "Mehnatni muhofaza qilish to'g'risida"gi qonun, Mehnat kodeksi va sohaga oid boshqa normativ-huquqiy hujjatlar asosida javob bering.
-2. Har doim aniq va rasmiy uslubda, ammo tushunarli tilda muloqot qiling.
-3. Agar savol mehnat muhofazasi bilan bog'liq bo'lmasa, muloyimlik bilan sohaga oid savollar berishni so'rang.
-4. Javoblaringizda imkon qadar aniq modda va bandlarni ko'rsating.`;
+const SYSTEM_INSTRUCTION = `Siz O'zbekiston Respublikasining mehnatni muhofaza qilish sohasidagi sun'iy intellekt maslahatchisiz.
+Sizning yagona va asosiy manbangiz: "https://gov.uz/oz/bv/sections/mehnatni-muhofaza-qilish-sohasiga-oid-normativ-huquqiy-hujjatlar" va O'zbekiston qonunchiligi.
+
+Qat'iy qoidalar:
+1. **Faqat soha bo'yicha javob bering**: Foydalanuvchi "271-qaror" yoki "60-qaror" desa, faqat va faqat **Mehnatni muhofaza qilish va Sanoat xavfsizligi**ga oid qarorni izlang. Boshqa sohalardagi (ta'lim, qishloq xo'jaligi va h.k.) shu raqamli qarorlarni umuman tilga olmang.
+2. **Aniq va lo'nda bo'ling**: Agar qaror soha bo'yicha bo'lsa, uning to'liq nomi, sanasi va mazmunini ayting.
+3. **Manbaga tayaning**: Javobingizni har doim rasmiy hujjatga asoslang.
+4. **To'qimang**: Agar soha bo'yicha bunday raqamli qaror bo'lmasa, "Mehnat muhofazasi sohasida bunday raqamli qaror topilmadi" deng.
+
+Misollar:
+- "271 qaror" -> Faqat VMQ-271 "Xavfli ishlab chiqarish obyektlarining sanoat xavfsizligi to'g'risida" (2008).
+- "286 qaror" -> Faqat VMQ-286 "Mehnatni muhofaza qilish bo'yicha me'yoriy hujjatlarni tasdiqlash to'g'risida" (2005).
+- "60 qaror" -> Faqat VMQ-60 "Mehnatni muhofaza qilishga doir me'yoriy hujjatlarni qayta ko'rib chiqish..." (2000).`;
 
 console.log("Mehnat Muxofazasi AI Boti ishga tushmoqda...");
 
@@ -59,14 +65,29 @@ bot.on(message('text'), async (ctx) => {
             ],
             config: {
                 systemInstruction: SYSTEM_INSTRUCTION,
+                tools: [{ googleSearch: {} }], // Enable Google Search for bot too
             },
         });
 
-        const replyText = response.text || "Kechirasiz, javob topa olmadim.";
+        let replyText = response.text || "Kechirasiz, javob topa olmadim.";
+
+        // Extract sources if available
+        const sources = response.candidates?.[0]?.groundingMetadata?.groundingChunks
+            ?.map((chunk: any) => chunk.web?.uri)
+            ?.filter((uri: string) => uri) || [];
+
+        // Append sources to the text
+        if (sources.length > 0) {
+            replyText += "\n\n📚 **Manbalar:**\n";
+            // Unique sources only, max 3
+            [...new Set(sources)].slice(0, 3).forEach((uri: unknown) => {
+                replyText += `- [Manba](${uri})\n`;
+            });
+        }
 
         // Telegram message length limit is 4096. Split if necessary or send as markdown.
         try {
-            await ctx.reply(replyText, { parse_mode: 'Markdown' });
+            await ctx.reply(replyText, { parse_mode: 'Markdown', link_preview_options: { is_disabled: true } });
         } catch (markdownError) {
             console.error("Markdown Error, retrying as text:", markdownError);
             await ctx.reply(replyText); // Fallback to plain text
