@@ -92,8 +92,8 @@ const ChatWindow: React.FC = () => {
           <div key={m.id} className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
             <div className={`group flex flex-col ${m.role === 'user' ? 'items-end' : 'items-start'} max-w-[90%] md:max-w-[75%]`}>
               <div className={`px-5 py-4 rounded-3xl shadow-sm relative transition-all duration-200 ${m.role === 'user'
-                  ? 'bg-blue-600 text-white rounded-tr-none'
-                  : 'bg-white dark:bg-zinc-900 text-gray-800 dark:text-gray-100 rounded-tl-none border border-black/5 dark:border-white/5'
+                ? 'bg-blue-600 text-white rounded-tr-none'
+                : 'bg-white dark:bg-zinc-900 text-gray-800 dark:text-gray-100 rounded-tl-none border border-black/5 dark:border-white/5'
                 }`}>
                 <p className="whitespace-pre-wrap leading-[1.6] text-[15px] md:text-[16px] font-normal tracking-tight">{m.text}</p>
                 {m.sources && m.sources.length > 0 && (
@@ -135,7 +135,7 @@ const ChatWindow: React.FC = () => {
       {/* Input Area */}
       <footer className="p-4 md:p-8 glass transition-all">
         <div className="max-w-4xl mx-auto">
-          <div className="flex items-end gap-3 bg-gray-100 dark:bg-zinc-900 rounded-[2rem] p-3 px-6 border border-black/5 dark:border-white/10 focus-within:ring-4 ring-blue-500/10 transition-all">
+          <div className="flex items-end gap-3 bg-white dark:bg-zinc-900 rounded-[2rem] p-3 px-6 border border-gray-200/50 dark:border-zinc-800 transition-all">
             <textarea
               rows={1}
               value={input}
@@ -147,12 +147,13 @@ const ChatWindow: React.FC = () => {
                 }
               }}
               placeholder="Maslahatchidan so'rang..."
-              className="flex-1 bg-transparent border-none focus:ring-0 text-gray-800 dark:text-white placeholder-gray-400 dark:placeholder-gray-600 py-2 resize-none max-h-32 text-[16px]"
+              style={{ outline: 'none', boxShadow: 'none' }}
+              className="flex-1 bg-transparent !border-0 !outline-none !ring-0 focus:!border-0 focus:!outline-none focus:!ring-0 text-gray-800 dark:text-white placeholder:text-gray-400 dark:placeholder:text-gray-500 py-2 resize-none max-h-32 text-[16px] leading-relaxed"
             />
             <button
               onClick={handleSend}
               disabled={isLoading || !input.trim()}
-              className={`p-3 rounded-full transition-all flex-shrink-0 mb-0.5 ${input.trim() ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/40' : 'bg-gray-300 dark:bg-zinc-800 text-gray-500'
+              className={`p-3 rounded-full transition-all flex-shrink-0 mb-0.5 ${input.trim() ? 'bg-blue-600 hover:bg-blue-700 text-white shadow-lg shadow-blue-500/40 hover:shadow-blue-500/60 scale-100 hover:scale-105 active:scale-95' : 'bg-gray-200 dark:bg-zinc-800 text-gray-400 dark:text-gray-600 cursor-not-allowed'
                 }`}
             >
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
